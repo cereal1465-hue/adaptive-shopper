@@ -4,42 +4,37 @@ import 'reveal.js/dist/reveal.css';
 
 const Presentation = () => {
   const deckRef = useRef<HTMLDivElement>(null);
-  const revealRef = useRef<Reveal.Api | null>(null);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (deckRef.current && !revealRef.current) {
-      revealRef.current = new Reveal(deckRef.current, {
+    if (deckRef.current && !initialized.current) {
+      initialized.current = true;
+      
+      const deck = new Reveal(deckRef.current, {
         hash: true,
         controls: true,
         progress: true,
         center: true,
         transition: 'slide',
         backgroundTransition: 'fade',
-        width: 1920,
-        height: 1080,
+        embedded: false,
       });
-      revealRef.current.initialize();
+      
+      deck.initialize();
     }
-
-    return () => {
-      if (revealRef.current) {
-        revealRef.current.destroy();
-        revealRef.current = null;
-      }
-    };
   }, []);
 
   return (
-    <div className="reveal" ref={deckRef}>
+    <div className="reveal" ref={deckRef} style={{ height: '100vh', width: '100vw' }}>
       <div className="slides">
         {/* Title Slide */}
-        <section className="slide-title">
+        <section data-background="hsl(222, 47%, 6%)">
           <div className="animate-float">
             <div className="mb-8">
               <span className="tech-badge mb-4 inline-block">🧠 AI-Powered</span>
             </div>
-            <h1 className="mb-6" style={{ fontSize: '5rem' }}>GenUI</h1>
-            <p className="text-2xl mb-8" style={{ color: 'hsl(215 20% 75%)' }}>
+            <h1 className="mb-6" style={{ fontSize: '4.5rem' }}>GenUI</h1>
+            <p className="text-2xl mb-8" style={{ color: 'hsl(215, 20%, 75%)' }}>
               The Self-Evolving AI Storefront
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
@@ -52,11 +47,11 @@ const Presentation = () => {
         </section>
 
         {/* Problem Slide */}
-        <section>
+        <section data-background="hsl(222, 47%, 6%)">
           <h2 className="mb-12">The Problem</h2>
           <div className="slide-content">
             <div className="glass-card p-8 mb-8 glow-secondary">
-              <p className="text-3xl font-medium" style={{ color: 'hsl(280 100% 75%)' }}>
+              <p className="text-2xl font-medium" style={{ color: 'hsl(280, 100%, 75%)' }}>
                 "Every shopper—decisive or hesitant, minimalist or visually exploratory—gets the <span className="gradient-text">same static UI</span>."
               </p>
             </div>
@@ -69,10 +64,10 @@ const Presentation = () => {
         </section>
 
         {/* Solution Slide */}
-        <section>
+        <section data-background="hsl(222, 47%, 6%)">
           <h2 className="mb-12">Our Solution</h2>
           <div className="slide-content">
-            <p className="text-2xl mb-10" style={{ color: 'hsl(215 20% 85%)' }}>
+            <p className="text-2xl mb-10" style={{ color: 'hsl(215, 20%, 85%)' }}>
               What if the <span className="gradient-text font-bold">UI itself could learn</span> in real time?
             </p>
             <div className="grid grid-cols-2 gap-6">
@@ -97,64 +92,64 @@ const Presentation = () => {
         </section>
 
         {/* How It Works */}
-        <section>
+        <section data-background="hsl(222, 47%, 6%)">
           <h2 className="mb-12">How It Works</h2>
           <div className="slide-content">
-            <div className="flex items-center justify-between gap-4">
-              <div className="glass-card p-6 text-center flex-1">
-                <div className="text-4xl mb-3">📡</div>
-                <h3 className="text-lg mb-2">Telemetry</h3>
-                <p className="text-sm" style={{ color: 'hsl(215 20% 65%)' }}>Mouse, scroll, touch events</p>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <div className="glass-card p-5 text-center" style={{ minWidth: '140px' }}>
+                <div className="text-3xl mb-2">📡</div>
+                <h3 className="text-base mb-1">Telemetry</h3>
+                <p className="text-xs" style={{ color: 'hsl(215, 20%, 65%)' }}>Events</p>
               </div>
-              <div className="gradient-text text-3xl">→</div>
-              <div className="glass-card p-6 text-center flex-1">
-                <div className="text-4xl mb-3">⚡</div>
-                <h3 className="text-lg mb-2">Motor State</h3>
-                <p className="text-sm" style={{ color: 'hsl(215 20% 65%)' }}>Velocity, acceleration, jerk</p>
+              <div className="gradient-text text-2xl">→</div>
+              <div className="glass-card p-5 text-center" style={{ minWidth: '140px' }}>
+                <div className="text-3xl mb-2">⚡</div>
+                <h3 className="text-base mb-1">Motor State</h3>
+                <p className="text-xs" style={{ color: 'hsl(215, 20%, 65%)' }}>Velocity</p>
               </div>
-              <div className="gradient-text text-3xl">→</div>
-              <div className="glass-card p-6 text-center flex-1">
-                <div className="text-4xl mb-3">🤖</div>
-                <h3 className="text-lg mb-2">LLM Agents</h3>
-                <p className="text-sm" style={{ color: 'hsl(215 20% 65%)' }}>Context + Variance analysis</p>
+              <div className="gradient-text text-2xl">→</div>
+              <div className="glass-card p-5 text-center" style={{ minWidth: '140px' }}>
+                <div className="text-3xl mb-2">🤖</div>
+                <h3 className="text-base mb-1">LLM Agents</h3>
+                <p className="text-xs" style={{ color: 'hsl(215, 20%, 65%)' }}>Analysis</p>
               </div>
-              <div className="gradient-text text-3xl">→</div>
-              <div className="glass-card p-6 text-center flex-1 glow-primary">
-                <div className="text-4xl mb-3">✨</div>
-                <h3 className="text-lg mb-2">Adaptive UI</h3>
-                <p className="text-sm" style={{ color: 'hsl(215 20% 65%)' }}>Live layout updates</p>
+              <div className="gradient-text text-2xl">→</div>
+              <div className="glass-card p-5 text-center glow-primary" style={{ minWidth: '140px' }}>
+                <div className="text-3xl mb-2">✨</div>
+                <h3 className="text-base mb-1">Adaptive UI</h3>
+                <p className="text-xs" style={{ color: 'hsl(215, 20%, 65%)' }}>Live updates</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Agent Architecture */}
-        <section>
-          <h2 className="mb-12">Multi-Agent Architecture</h2>
+        <section data-background="hsl(222, 47%, 6%)">
+          <h2 className="mb-10">Multi-Agent Architecture</h2>
           <div className="slide-content">
-            <div className="grid grid-cols-3 gap-8">
-              <div className="gradient-border p-6">
-                <h3 className="text-xl mb-4 mono">Motor State Stream</h3>
-                <p className="text-sm mb-3" style={{ color: 'hsl(215 20% 65%)' }}>Python • $0 cost</p>
-                <ul className="text-sm space-y-2" style={{ color: 'hsl(215 20% 75%)' }}>
-                  <li>• Real-time velocity/acceleration</li>
-                  <li>• Cognitive state classification</li>
-                  <li>• Pure mathematical modeling</li>
+            <div className="grid grid-cols-3 gap-6">
+              <div className="gradient-border p-5">
+                <h3 className="text-lg mb-3 mono">Motor State Stream</h3>
+                <p className="text-xs mb-3" style={{ color: 'hsl(215, 20%, 65%)' }}>Python • $0 cost</p>
+                <ul className="text-sm space-y-1" style={{ color: 'hsl(215, 20%, 75%)' }}>
+                  <li>• Real-time velocity</li>
+                  <li>• Cognitive classification</li>
+                  <li>• Mathematical modeling</li>
                 </ul>
               </div>
-              <div className="gradient-border p-6">
-                <h3 className="text-xl mb-4 mono">Context Analyst</h3>
-                <p className="text-sm mb-3" style={{ color: 'hsl(215 20% 65%)' }}>LLM • Batched</p>
-                <ul className="text-sm space-y-2" style={{ color: 'hsl(215 20% 75%)' }}>
+              <div className="gradient-border p-5">
+                <h3 className="text-lg mb-3 mono">Context Analyst</h3>
+                <p className="text-xs mb-3" style={{ color: 'hsl(215, 20%, 65%)' }}>LLM • Batched</p>
+                <ul className="text-sm space-y-1" style={{ color: 'hsl(215, 20%, 75%)' }}>
                   <li>• Behavior-UI correlation</li>
                   <li>• Preference inference</li>
                   <li>• Pattern recognition</li>
                 </ul>
               </div>
-              <div className="gradient-border p-6">
-                <h3 className="text-xl mb-4 mono">Variance Auditor</h3>
-                <p className="text-sm mb-3" style={{ color: 'hsl(215 20% 65%)' }}>LLM • Batched</p>
-                <ul className="text-sm space-y-2" style={{ color: 'hsl(215 20% 75%)' }}>
+              <div className="gradient-border p-5">
+                <h3 className="text-lg mb-3 mono">Variance Auditor</h3>
+                <p className="text-xs mb-3" style={{ color: 'hsl(215, 20%, 65%)' }}>LLM • Batched</p>
+                <ul className="text-sm space-y-1" style={{ color: 'hsl(215, 20%, 75%)' }}>
                   <li>• Evaluates experiments</li>
                   <li>• Validates hypotheses</li>
                   <li>• Controls exploration</li>
@@ -165,10 +160,10 @@ const Presentation = () => {
         </section>
 
         {/* Results Slide */}
-        <section>
-          <h2 className="mb-12">Results</h2>
+        <section data-background="hsl(222, 47%, 6%)">
+          <h2 className="mb-10">Results</h2>
           <div className="slide-content">
-            <div className="grid grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-3 gap-6 mb-10">
               <div className="glass-card metric glow-primary">
                 <span className="metric-value">~50ms</span>
                 <span className="metric-label">End-to-end latency</span>
@@ -179,7 +174,7 @@ const Presentation = () => {
               </div>
               <div className="glass-card metric glow-secondary">
                 <span className="metric-value">$0</span>
-                <span className="metric-label">High-freq inference cost</span>
+                <span className="metric-label">High-freq inference</span>
               </div>
             </div>
             <ul className="custom-list">
@@ -191,34 +186,34 @@ const Presentation = () => {
         </section>
 
         {/* Key Insight */}
-        <section>
-          <h2 className="mb-12">What We Learned</h2>
+        <section data-background="hsl(222, 47%, 6%)">
+          <h2 className="mb-10">What We Learned</h2>
           <div className="slide-content">
-            <div className="glass-card p-10 glow-primary animate-pulse-glow">
-              <p className="text-2xl mb-6" style={{ color: 'hsl(210 40% 98%)' }}>
+            <div className="glass-card p-8 glow-primary animate-pulse-glow mb-8">
+              <p className="text-xl" style={{ color: 'hsl(210, 40%, 98%)' }}>
                 "Behavioral signals are <span className="gradient-text font-bold">incredibly information-dense</span>—tiny interactions reveal strong preferences."
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-8 mt-10">
+            <div className="grid grid-cols-2 gap-6">
               <div className="feature-card">
-                <p className="text-lg">🔢 Math models replace LLMs for real-time tasks</p>
+                <p className="text-base">🔢 Math models replace LLMs for real-time tasks</p>
               </div>
               <div className="feature-card">
-                <p className="text-lg">⏸️ Knowing when <em>not</em> to run a model matters</p>
+                <p className="text-base">⏸️ Knowing when <em>not</em> to run a model matters</p>
               </div>
               <div className="feature-card">
-                <p className="text-lg">🎯 Subtle, continuous personalization wins</p>
+                <p className="text-base">🎯 Subtle, continuous personalization wins</p>
               </div>
               <div className="feature-card">
-                <p className="text-lg">🔄 Exploration must be principled, not random</p>
+                <p className="text-base">🔄 Exploration must be principled, not random</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* What's Next */}
-        <section>
-          <h2 className="mb-12">What's Next</h2>
+        <section data-background="hsl(222, 47%, 6%)">
+          <h2 className="mb-10">What's Next</h2>
           <div className="slide-content">
             <ul className="custom-list text-xl space-y-4">
               <li>Vector-based semantic component selection</li>
@@ -231,17 +226,17 @@ const Presentation = () => {
         </section>
 
         {/* Closing Slide */}
-        <section className="slide-title">
+        <section data-background="hsl(222, 47%, 6%)">
           <div className="animate-float">
-            <h1 className="mb-8" style={{ fontSize: '4rem' }}>GenUI</h1>
-            <p className="text-3xl mb-12 gradient-text font-semibold">
+            <h1 className="mb-6" style={{ fontSize: '3.5rem' }}>GenUI</h1>
+            <p className="text-2xl mb-10 gradient-text font-semibold">
               Storefronts that don't just sell—but learn.
             </p>
-            <div className="glass-card p-8 inline-block">
-              <p className="text-xl" style={{ color: 'hsl(215 20% 75%)' }}>
+            <div className="glass-card p-6 inline-block">
+              <p className="text-lg mb-4" style={{ color: 'hsl(215, 20%, 75%)' }}>
                 Built with ❤️ using
               </p>
-              <div className="flex gap-3 justify-center mt-4 flex-wrap">
+              <div className="flex gap-3 justify-center flex-wrap">
                 <span className="tech-badge">React</span>
                 <span className="tech-badge">TypeScript</span>
                 <span className="tech-badge">LangGraph</span>
